@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_17918", "label": "W_Normal_17918", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_82118", "label": "W_Normal_82118", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_71876", "label": "W_Normal_71876", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_55267", "label": "W_Normal_55267", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_2631", "label": "W_Normal_2631", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_97664", "label": "W_Normal_97664", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_47098", "label": "W_Normal_47098", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_99873", "label": "W_Normal_99873", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_72879", "label": "W_Normal_72879", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_35796", "label": "W_Normal_35796", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_67565", "label": "W_Normal_67565", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_28447", "label": "W_Normal_28447", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_47582", "label": "W_Normal_47582", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_21957", "label": "W_Normal_21957", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_19627", "label": "W_Normal_19627", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_31326", "label": "W_Normal_31326", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_66528", "label": "W_Normal_66528", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_67655", "label": "W_Normal_67655", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_50607", "label": "W_Normal_50607", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_57526", "label": "W_Normal_57526", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_45262", "label": "W_Normal_45262", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_1862", "label": "W_Normal_1862", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_99962", "label": "W_Normal_99962", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_29311", "label": "W_Normal_29311", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_51582", "label": "W_Normal_51582", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_1765", "label": "W_Normal_1765", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_10057", "label": "W_Normal_10057", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_14588", "label": "W_Normal_14588", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_10174", "label": "W_Normal_10174", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_27707", "label": "W_Normal_27707", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_64555", "label": "W_Normal_64555", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_71528", "label": "W_Normal_71528", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_69373", "label": "W_Normal_69373", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_9923", "label": "W_Normal_9923", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_76990", "label": "W_Normal_76990", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_71737", "label": "W_Normal_71737", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_51026", "label": "W_Normal_51026", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_33623", "label": "W_Normal_33623", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_5248", "label": "W_Normal_5248", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_90906", "label": "W_Normal_90906", "shape": "dot", "size": 10}, {"color": "#0000FF", "font": {"color": "black"}, "id": "W_Normal_12", "label": "W_Normal_12", "shape": "dot", "size": 30}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_55380", "label": "W_Normal_55380", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_63066", "label": "W_Normal_63066", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_95757", "label": "W_Normal_95757", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_41312", "label": "W_Normal_41312", "shape": "dot", "size": 10}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "W_Normal_84561", "label": "W_Normal_84561", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"Amount": 8.2086, "Timestamp": "2026-02-15 06:41:00", "arrows": "to", "from": "W_Normal_17918", "to": "W_Normal_82118", "width": 1}, {"Amount": 8.0593, "Timestamp": "2026-01-30 03:39:00", "arrows": "to", "from": "W_Normal_71876", "to": "W_Normal_55267", "width": 1}, {"Amount": 5.2715, "Timestamp": "2026-01-24 07:52:00", "arrows": "to", "from": "W_Normal_2631", "to": "W_Normal_97664", "width": 1}, {"Amount": 3.6084, "Timestamp": "2026-01-19 18:49:00", "arrows": "to", "from": "W_Normal_47098", "to": "W_Normal_99873", "width": 1}, {"Amount": 2.6671, "Timestamp": "2026-02-18 09:54:00", "arrows": "to", "from": "W_Normal_97664", "to": "W_Normal_72879", "width": 1}, {"Amount": 7.4245, "Timestamp": "2026-02-14 10:05:00", "arrows": "to", "from": "W_Normal_97664", "to": "W_Normal_35796", "width": 1}, {"Amount": 4.4867, "Timestamp": "2026-02-21 02:12:00", "arrows": "to", "from": "W_Normal_97664", "to": "W_Normal_67565", "width": 1}, {"Amount": 8.8387, "Timestamp": "2026-01-18 00:36:00", "arrows": "to", "from": "W_Normal_97664", "to": "W_Normal_28447", "width": 1}, {"Amount": 0.6076, "Timestamp": "2026-01-13 05:20:00", "arrows": "to", "from": "W_Normal_47582", "to": "W_Normal_82118", "width": 1}, {"Amount": 1.5689, "Timestamp": "2026-02-13 16:05:00", "arrows": "to", "from": "W_Normal_21957", "to": "W_Normal_97664", "width": 1}, {"Amount": 14.4875, "Timestamp": "2026-02-25 02:40:00", "arrows": "to", "from": "W_Normal_19627", "to": "W_Normal_31326", "width": 1}, {"Amount": 1.4759, "Timestamp": "2026-02-11 13:35:00", "arrows": "to", "from": "W_Normal_31326", "to": "W_Normal_67565", "width": 1}, {"Amount": 14.8109, "Timestamp": "2026-03-03 21:29:00", "arrows": "to", "from": "W_Normal_31326", "to": "W_Normal_66528", "width": 1}, {"Amount": 4.6267, "Timestamp": "2026-01-21 01:41:00", "arrows": "to", "from": "W_Normal_31326", "to": "W_Normal_67655", "width": 1}, {"Amount": 10.1701, "Timestamp": "2026-02-04 02:09:00", "arrows": "to", "from": "W_Normal_31326", "to": "W_Normal_50607", "width": 1}, {"Amount": 3.3353, "Timestamp": "2026-02-21 11:12:00", "arrows": "to", "from": "W_Normal_57526", "to": "W_Normal_55267", "width": 1}, {"Amount": 14.6403, "Timestamp": "2026-01-26 14:42:00", "arrows": "to", "from": "W_Normal_45262", "to": "W_Normal_1862", "width": 1}, {"Amount": 6.8454, "Timestamp": "2026-03-11 07:23:00", "arrows": "to", "from": "W_Normal_99873", "to": "W_Normal_99962", "width": 1}, {"Amount": 7.5715, "Timestamp": "2026-01-22 12:58:00", "arrows": "to", "from": "W_Normal_29311", "to": "W_Normal_67565", "width": 1}, {"Amount": 2.5686, "Timestamp": "2026-02-14 21:52:00", "arrows": "to", "from": "W_Normal_51582", "to": "W_Normal_29311", "width": 1}, {"Amount": 6.6573, "Timestamp": "2026-03-01 23:00:00", "arrows": "to", "from": "W_Normal_1765", "to": "W_Normal_29311", "width": 1}, {"Amount": 8.5669, "Timestamp": "2026-01-01 09:18:00", "arrows": "to", "from": "W_Normal_10057", "to": "W_Normal_97664", "width": 1}, {"Amount": 9.9336, "Timestamp": "2026-01-10 08:02:00", "arrows": "to", "from": "W_Normal_14588", "to": "W_Normal_82118", "width": 1}, {"Amount": 2.3848, "Timestamp": "2026-02-02 11:14:00", "arrows": "to", "from": "W_Normal_55267", "to": "W_Normal_10174", "width": 1}, {"Amount": 0.6655, "Timestamp": "2026-02-26 09:35:00", "arrows": "to", "from": "W_Normal_27707", "to": "W_Normal_82118", "width": 1}, {"Amount": 8.1401, "Timestamp": "2026-01-31 06:04:00", "arrows": "to", "from": "W_Normal_64555", "to": "W_Normal_31326", "width": 1}, {"Amount": 11.4162, "Timestamp": "2026-01-15 12:19:00", "arrows": "to", "from": "W_Normal_71528", "to": "W_Normal_82118", "width": 1}, {"Amount": 9.1426, "Timestamp": "2026-03-01 20:46:00", "arrows": "to", "from": "W_Normal_69373", "to": "W_Normal_31326", "width": 1}, {"Amount": 14.2895, "Timestamp": "2026-02-03 12:48:00", "arrows": "to", "from": "W_Normal_9923", "to": "W_Normal_82118", "width": 1}, {"Amount": 14.8133, "Timestamp": "2026-01-02 19:19:00", "arrows": "to", "from": "W_Normal_76990", "to": "W_Normal_97664", "width": 1}, {"Amount": 1.5158, "Timestamp": "2026-02-17 20:06:00", "arrows": "to", "from": "W_Normal_71737", "to": "W_Normal_55267", "width": 1}, {"Amount": 8.1982, "Timestamp": "2026-01-20 01:08:00", "arrows": "to", "from": "W_Normal_51026", "to": "W_Normal_29311", "width": 1}, {"Amount": 10.8997, "Timestamp": "2026-01-28 08:13:00", "arrows": "to", "from": "W_Normal_33623", "to": "W_Normal_99873", "width": 1}, {"Amount": 9.2925, "Timestamp": "2026-01-16 23:56:00", "arrows": "to", "from": "W_Normal_5248", "to": "W_Normal_99873", "width": 1}, {"Amount": 11.5752, "Timestamp": "2026-01-11 03:10:00", "arrows": "to", "from": "W_Normal_90906", "to": "W_Normal_29311", "width": 1}, {"Amount": 1.8246, "Timestamp": "2026-02-27 02:02:00", "arrows": "to", "from": "W_Normal_12", "to": "W_Normal_67565", "width": 1}, {"Amount": 7.7091, "Timestamp": "2026-02-16 18:33:00", "arrows": "to", "from": "W_Normal_12", "to": "W_Normal_33623", "width": 1}, {"Amount": 4.3423, "Timestamp": "2026-03-05 01:19:00", "arrows": "to", "from": "W_Normal_67565", "to": "W_Normal_82118", "width": 1}, {"Amount": 1.49, "Timestamp": "2026-02-04 17:12:00", "arrows": "to", "from": "W_Normal_67565", "to": "W_Normal_55267", "width": 1}, {"Amount": 5.3651, "Timestamp": "2026-02-23 13:43:00", "arrows": "to", "from": "W_Normal_67565", "to": "W_Normal_45262", "width": 1}, {"Amount": 10.9539, "Timestamp": "2026-02-27 07:19:00", "arrows": "to", "from": "W_Normal_55380", "to": "W_Normal_45262", "width": 1}, {"Amount": 4.8421, "Timestamp": "2026-02-01 22:02:00", "arrows": "to", "from": "W_Normal_82118", "to": "W_Normal_63066", "width": 1}, {"Amount": 2.1535, "Timestamp": "2026-03-05 20:01:00", "arrows": "to", "from": "W_Normal_82118", "to": "W_Normal_95757", "width": 1}, {"Amount": 14.601, "Timestamp": "2026-03-07 16:57:00", "arrows": "to", "from": "W_Normal_82118", "to": "W_Normal_41312", "width": 1}, {"Amount": 4.685, "Timestamp": "2026-03-10 18:52:00", "arrows": "to", "from": "W_Normal_84561", "to": "W_Normal_55267", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"edges": {"color": {"inherit": true}, "smooth": false}, "physics": {"barnesHut": {"gravitationalConstant": -2000, "springLength": 200}, "minVelocity": 0.75}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
